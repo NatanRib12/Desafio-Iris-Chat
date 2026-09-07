@@ -10,6 +10,7 @@
 - Log de erro no console do navegador exibindo Access to fetch... has been blocked by CORS policy acompanhado por falha de rede (net::ERR_FAILED).
 
 ## Como consertar:
+- Substituir a URL absoluta por um caminho relativo prefixado pela constante BASE. Dessa forma, a requisição passa a ser enviada para a mesma origem do frontend (localhost:5173).
 - export async function detalheAtivo(ativoId: string) {
   const resposta = await fetch(`${BASE}/ativos/${ativoId}`);
   return resposta.json();
@@ -29,6 +30,7 @@
 - Diversas requisições GET /api/conversas?busca= no terminal do backend.
 
 ## Como consertar:
+- Incluir o array de dependências no useEffect informando a variável [busca]. Isso restringe a execução do efeito apenas para dois momentos: na montagem inicial do componente e quando o estado da variável de pesquisa for modificado.
 - useEffect(() => {
   api.listarConversas(busca).then((lista) => {
     setConversas(lista);
@@ -37,7 +39,7 @@
 
 ---
 
-# 3 Vazamento de memória (Memory Leak) por acúmulo de
+# 3 Vazamento de memória (Memory Leak) por acúmulo de setInterval
 
 ## Onde está: 
 - src/componentes/MenuLateral.tsx (linhas 22-28)
@@ -49,6 +51,7 @@
 - Diversas chamadas GET /api/nao-lidas no terminal do backend.
 
 ## Como consertar:
+- Implementar uma função de limpeza (cleanup function) no retorno do useEffect utilizando a instrução clearInterval(timer).
 - useEffect(() => {
   const timer = setInterval(() => {
     api.contarNaoLidas().then((contagem) => setNaoLidas(contagem));
@@ -71,6 +74,7 @@
 - Requisições contínuas no terminal do backend.
 
 ## Como consertar:
+- Alterar a lista de dependências do useEffect no Chat.tsx de [conversa] para a propriedade primitiva [conversa.id]. Como o JavaScript compara tipos primitivos (strings) pelo valor e não pelo endereço de memória, o React reconhece que o identificador da conversa permanece o mesmo a cada segundo, evitando o disparo desnecessário de novas requisições.
 - useEffect(() => {
   api.listarMensagens(conversa.id).then((resposta) => {
     setMensagens(resposta.mensagens);
@@ -91,6 +95,7 @@
 - Queda da API juntamente com o erro no terminal do backend: TypeError: Cannot read properties of undefined (reading 'criadoEm') na linha 49.
 
 ## Como consertar:
+- Adicionar o operador de encadeamento opcional (Optional Chaining ?.) no acesso à propriedade ultima?.criadoEm acompanhado por um valor de contingência (|| null).
 - res.json({
     mensagens,
     total: mensagens.length,
