@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>IRIS Chat, desafio parte 1</title>
+<!--FONTE-->
+<style>
+  :root {
+    --blue: #3436B1;
+    --blue-dark: #202AA2;
+    --red: #CF2A2E;
+    --orange: #F47D4E;
+    --green-accent: #00AA4C;
+
+    --papel: #F5F5F7;
+    --papel-fundo: #EDEDF0;
+    --noite: #0A0A0F;
+
+    --tinta: #1A1A1A;
+    --tinta-2: #444444;
+    --tinta-3: #8A8A90;
+
+    --fonte: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    --mono: 'Cascadia Mono', 'Segoe UI Mono', Consolas, ui-monospace, monospace;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--fonte);
+    font-weight: 400;
+    color: var(--tinta);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .pagina {
+    width: 210mm;
+    height: 297mm;
+    position: relative;
+    overflow: hidden;
+    background: var(--papel);
+    padding: 18mm 20mm 15mm;
+    display: flex;
+    flex-direction: column;
+    page-break-after: always;
+  }
+
+  .pagina:last-child {
+    page-break-after: auto;
+  }
+
+  .pagina.escura {
+    background: var(--noite);
+    color: #FFFFFF;
+    --tinta: #FFFFFF;
+    --tinta-2: #C4C4CC;
+    --tinta-3: #6E6E7A;
+  }
+
+  .cruz {
+    display: inline-block;
+    position: relative;
+    width: 9px;
+    height: 9px;
+    color: var(--blue);
+    flex: none;
+  }
+
+  .pagina.escura .cruz {
+    color: #4A4CD6;
+  }
+
+  .cruz::before,
+  .cruz::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+  }
+
+  .cruz::before {
+    left: 50%;
+    top: 0;
+    width: 1.5px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  .cruz::after {
+    top: 50%;
+    left: 0;
+    height: 1.5px;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+
+  .cruzes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1.5px solid rgba(26, 26, 26, 0.12);
+    padding-bottom: 5mm;
+    margin-bottom: 12mm;
+  }
+
+  .escura .topo {
+    border-bottom-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 7.5pt;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--tinta-3);
+  }
+
+  .kicker.cor {
+    color: var(--blue);
+  }
+
+  .escura .kicker.cor {
+    color: #7B7DEB;
+  }
+
+  .mega {
+    font-size: 46pt;
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    margin: 0;
+  }
+
+  .titulo {
+    font-size: 25pt;
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin: 0 0 7mm;
+  }
+
+  .sub {
+    font-size: 14pt;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--tinta-2);
+    margin: 0;
+  }
+
+  p {
+    font-size: 10.5pt;
+    line-height: 1.62;
+    color: var(--tinta-2);
+    margin: 0 0 4.5mm;
+    max-width: 155mm;
+  }
+
+  p strong {
+    font-weight: 400;
+    color: var(--tinta);
+    box-shadow: inset 0 -0.42em rgba(52, 54, 177, 0.14);
+  }
+
+  .escura p strong {
+    box-shadow: inset 0 -0.42em rgba(123, 125, 235, 0.28);
+  }
+
+  .conteudo {
+    flex: 1;
+  }
+
+  .rodape {
+    margin-top: auto;
+    padding-top: 8mm;
+  }
+
+  .rodape-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4mm;
+  }
+
+  .marca {
+    font-size: 8pt;
+    letter-spacing: 0.04em;
+    color: var(--tinta-3);
+  }
+
+  .marca b {
+    font-weight: 400;
+    color: var(--tinta-2);
+  }
+
+  .numero {
+    font-family: var(--mono);
+    font-size: 8pt;
+    color: var(--tinta-3);
+  }
+
+  .bloco {
+    background: var(--papel-fundo);
+    border-left: 2px solid var(--blue);
+    padding: 6mm 7mm;
+    margin: 0 0 6mm;
+    max-width: 155mm;
+  }
+
+  .bloco p:last-child {
+    margin-bottom: 0;
+  }
+
+  .bloco.atencao {
+    border-left-color: var(--red);
+  }
+
+  .escura .bloco {
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: #4A4CD6;
+  }
+
+  .rotulo {
+    font-family: var(--mono);
+    font-size: 7pt;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tinta-3);
+    display: block;
+    margin-bottom: 3mm;
+  }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 9.5pt;
+  }
+
+  pre {
+    font-family: var(--mono);
+    font-size: 9pt;
+    line-height: 1.75;
+    color: var(--tinta);
+    background: var(--papel-fundo);
+    border: 1.5px solid rgba(26, 26, 26, 0.1);
+    padding: 5mm 6mm;
+    margin: 0 0 6mm;
+    max-width: 155mm;
+    white-space: pre-wrap;
+  }
+
+  pre .cinza {
+    color: var(--tinta-3);
+  }
+
+  .lista {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 6mm;
+    max-width: 155mm;
+  }
+
+  .lista li {
+    font-size: 10.5pt;
+    line-height: 1.6;
+    color: var(--tinta-2);
+    padding-left: 7mm;
+    position: relative;
+    margin-bottom: 3mm;
+  }
+
+  .lista li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 3.5mm;
+    height: 1.5px;
+    background: var(--blue);
+  }
+
+  .escura .lista li::before {
+    background: #4A4CD6;
+  }
+
+  .etapa {
+    display: grid;
+    grid-template-columns: 14mm 1fr;
+    gap: 0 4mm;
+    margin-bottom: 9mm;
+    max-width: 158mm;
+  }
+
+  .etapa-num {
+    font-size: 25pt;
+    font-weight: 400;
+    line-height: 0.9;
+    color: var(--blue);
+    letter-spacing: -0.03em;
+  }
+
+  .etapa h3 {
+    font-size: 13pt;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    margin: 0 0 2.5mm;
+    color: var(--tinta);
+  }
+
+  .etapa p {
+    margin-bottom: 2.5mm;
+  }
+
+  .etapa p:last-child {
+    margin-bottom: 0;
+  }
+
+  .capa-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6mm;
+    margin-top: 14mm;
+    padding-top: 7mm;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.14);
+    max-width: 160mm;
+  }
+
+  .capa-meta div span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 7pt;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tinta-3);
+    margin-bottom: 2.5mm;
+  }
+
+  .capa-meta div strong {
+    font-size: 10.5pt;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 1.4;
+  }
+
+  .fecho {
+    font-size: 15pt;
+    line-height: 1.45;
+    letter-spacing: -0.015em;
+    color: #FFFFFF;
+    max-width: 150mm;
+    margin: 0 0 6mm;
+  }
+</style>
+</head>
+<body>
+
+<section class="pagina escura">
+  <div class="topo">
+    <span class="kicker">fuse IoT &nbsp;·&nbsp; Capacitação</span>
+    <span class="kicker">Setembro 2026</span>
+  </div>
+
+  <div class="conteudo" style="display:flex; flex-direction:column; justify-content:center;">
+    <span class="kicker cor" style="margin-bottom:8mm; display:block;">Parte 1 de 2</span>
+
+    <h1 class="mega">IRIS Chat:<br />achar o que<br />está quebrado.</h1>
+
+    <p class="sub" style="margin-top:10mm; max-width:135mm;">
+      Um app que funciona, roda na sua máquina em dois comandos, e está cheio de problema.
+      Descobrir quais, entender por quê e consertar: é isso.
+    </p>
+
+    <div class="capa-meta">
+      <div>
+        <span>Tempo estimado</span>
+        <strong>4 a 6 horas<br />de trabalho</strong>
+      </div>
+      <div>
+        <span>Stack</span>
+        <strong>React, Vite<br />e Express</strong>
+      </div>
+      <div>
+        <span>Pré-requisito</span>
+        <strong>Node 20<br />e mais nada</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">01</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">01 &nbsp;·&nbsp; O contexto</span>
+    <span class="kicker">IRIS Chat &nbsp;·&nbsp; Parte 1</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">O que você vai mexer</h2>
+
+    <p>
+      O <strong>IRIS</strong> é a nossa plataforma de monitoramento de ativos industriais. Ela recebe
+      dados de sensores instalados em máquinas de fábrica, como prensas, misturadores e injetoras,
+      e responde perguntas sobre eles: o que está fora do normal, desde quando, o que provavelmente
+      causou.
+    </p>
+
+    <p>
+      O <strong>IRIS Chat</strong> é uma versão pequena disso, montada só para este exercício. Tem três
+      partes na tela: um menu lateral com as conversas e os ativos, um chat com o agente no meio e um
+      painel com os dados do ativo à direita.
+    </p>
+
+    <span class="rotulo">O que tem no repositório</span>
+
+    <ul class="lista">
+      <li>Um front em <strong>React</strong> com Vite e TypeScript, com seis componentes.</li>
+      <li>Uma API em <strong>Express</strong>, com as rotas de conversas, mensagens e ativos.</li>
+      <li>Dados de exemplo: cinco conversas, mensagens do agente e oito ativos de uma fábrica real
+        nossa, em Montes Claros.</li>
+      <li>Um <span class="mono">README.md</span> com o detalhe operacional: como rodar, o que cada
+        arquivo faz e a lista do que as pessoas reclamaram.</li>
+    </ul>
+
+    <div class="bloco atencao">
+      <span class="rotulo">Leia isto antes de começar</span>
+      <p style="margin-bottom:0;">
+        <strong>O app funciona e está cheio de problema.</strong> Ele trava depois de alguns segundos,
+        faz muito mais requisição do que precisa, uma parte da tela nunca carrega e a API cai sozinha.
+        Nada disso é acidente: os problemas foram colocados de propósito, e alguns estão escondidos
+        atrás de outros. Não é um exercício de escrever código do zero. É um exercício de
+        <strong>enxergar</strong>.
+      </p>
+    </div>
+
+    <p>
+      Não existe uma lista secreta que você precisa acertar inteira. Existe um app quebrado e você com
+      o navegador aberto. O que interessa é o caminho que você faz entre os dois.
+    </p>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">02</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">02 &nbsp;·&nbsp; Como rodar</span>
+    <span class="kicker">IRIS Chat &nbsp;·&nbsp; Parte 1</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">Dois comandos e pronto</h2>
+
+    <p>
+      Você precisa de <strong>Node 20 ou mais novo</strong> instalado. Nada além disso.
+    </p>
+
+    <pre><span class="cinza">$</span> npm install
+<span class="cinza">$</span> npm run dev</pre>
+
+    <p>
+      Isso sobe as duas coisas juntas: a API em <span class="mono">localhost:3001</span> e a interface
+      em <span class="mono">localhost:5173</span>. Abra a interface no navegador.
+    </p>
+
+    <div class="bloco">
+      <span class="rotulo">Você não precisa de chave de API de nada</span>
+      <p>
+        Nem OpenAI, nem Google, nem token nosso. Não tem banco de dados para instalar, não tem Docker,
+        não tem conta para criar, não tem arquivo <span class="mono">.env</span> para preencher. Tudo
+        roda na sua máquina, offline.
+      </p>
+      <p style="margin-bottom:0;">
+        As respostas do agente no chat são <strong>geradas pelo próprio servidor</strong>, montando
+        frases com os dados dos sensores que já estão no repositório. Não tem modelo de linguagem por
+        trás, e isso é de propósito: aqui o assunto é o app. A parte de IA vem na parte 2.
+      </p>
+    </div>
+
+    <span class="rotulo">O que esperar quando abrir</span>
+
+    <ul class="lista">
+      <li>A tela carrega e você consegue usar: clicar nas conversas, mandar mensagem, trocar de ativo.</li>
+      <li>Depois de alguns segundos a página vai ficar pesada. Isso é esperado, é um dos problemas.</li>
+      <li>Em algum momento a API vai cair e o chat vai parar de responder. Também é esperado.
+        <span class="mono">Ctrl+C</span> no terminal e <span class="mono">npm run dev</span> de novo.</li>
+      <li>Se quiser voltar os dados ao estado inicial, apague o arquivo
+        <span class="mono">server/dados.json</span>. Ele é recriado sozinho.</li>
+    </ul>
+
+    <p>
+      Deixe o <strong>DevTools do navegador aberto</strong> o tempo todo (F12), na aba Network. Boa
+      parte do que está errado aparece ali antes de aparecer na tela.
+    </p>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">03</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">03 &nbsp;·&nbsp; O que fazer</span>
+    <span class="kicker">IRIS Chat &nbsp;·&nbsp; Parte 1</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">Três movimentos</h2>
+
+    <div class="etapa">
+      <span class="etapa-num">01</span>
+      <div>
+        <h3>Investigar</h3>
+        <p>
+          Use o app como um usuário usaria e observe. Quantas requisições a tela faz? Para onde? Com
+          que frequência? O que o Console mostra em vermelho? O que o terminal da API imprime?
+        </p>
+        <p>
+          Só depois disso vá para o código. Quem começa lendo arquivo por arquivo demora mais e acha
+          menos do que quem começa olhando o app funcionar errado.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa-num">02</span>
+      <div>
+        <h3>Anotar num RELATORIO.md</h3>
+        <p>
+          Para cada problema: <strong>onde está</strong> (arquivo e linha), <strong>o que acontece e
+          por quê</strong>, que é o mecanismo e não o sintoma, <strong>como você descobriu</strong> e
+          <strong>como consertar</strong>.
+        </p>
+        <p>
+          Esse arquivo não é burocracia. É o que a gente vai abrir junto depois, para você me contar o
+          que encontrou. Oito problemas bem explicados rendem uma conversa muito melhor que vinte e
+          cinco listados sem explicação.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa-num">03</span>
+      <div>
+        <h3>Consertar</h3>
+        <p>
+          Corrija o que você achou, com <strong>um commit por problema</strong> e a mensagem dizendo
+          qual era a causa. Depois de cada correção, volte no navegador e confirme que resolveu de
+          verdade. Algumas coisas parecem resolvidas e não estão.
+        </p>
+        <p>
+          Se não conseguir consertar algum, escreva o que tentou e onde travou. Isso é informação útil,
+          não confissão de fracasso.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">04</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">04 &nbsp;·&nbsp; Se travar</span>
+    <span class="kicker">IRIS Chat &nbsp;·&nbsp; Parte 1</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">Como sair do buraco</h2>
+
+    <p>
+      Você vai travar em alguma coisa. Todo mundo trava. O que separa um dia produtivo de um dia
+      perdido é o que você faz nos vinte minutos seguintes.
+    </p>
+
+    <span class="rotulo">Quando não achar a causa</span>
+
+    <ul class="lista">
+      <li>Volte um passo e pergunte o que exatamente você observou, sem interpretar. "A tela travou" é
+        interpretação. "A aba Network mostra 400 requisições para a mesma URL em 10 segundos" é
+        observação.</li>
+      <li>Tente fazer o problema acontecer <strong>de propósito</strong>. Se você consegue reproduzir
+        quando quer, já está com meio caminho andado.</li>
+      <li>Tente fazer o problema <strong>parar</strong> de acontecer comentando o mínimo possível de
+        código. O que você comentou aponta para a causa.</li>
+      <li>Se depois de meia hora não saiu do lugar, me chama. Travar faz parte, ficar travado calado
+        não.</li>
+    </ul>
+
+    <span class="rotulo">Como saber se o conserto funcionou</span>
+
+    <ul class="lista">
+      <li>Refaça exatamente os passos que reproduziam o problema e olhe o mesmo lugar onde ele
+        aparecia, seja a aba Network, o Console ou o terminal.</li>
+      <li>Cuidado com o conserto que só esconde: se a requisição sumiu da tela mas continua saindo,
+        não está resolvido.</li>
+      <li>Confira se você não quebrou outra coisa. Clique nas outras conversas, troque de ativo, mande
+        mensagem de novo.</li>
+    </ul>
+
+    <span class="rotulo">Duas coisas que valem para o exercício inteiro</span>
+
+    <ul class="lista">
+      <li>Não reescreva o projeto e não troque de biblioteca. Consertar código dos outros é a parte
+        difícil, e é justamente ela que estamos treinando.</li>
+      <li>Pode pesquisar, ler documentação e usar IA à vontade. Só não me traga uma resposta que você
+        não consegue explicar, porque ela não te ajuda em nada no dia seguinte.</li>
+    </ul>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">05</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina escura">
+  <div class="topo">
+    <span class="kicker">05 &nbsp;·&nbsp; Por fim</span>
+    <span class="kicker">IRIS Chat &nbsp;·&nbsp; Parte 1</span>
+  </div>
+
+  <div class="conteudo" style="display:flex; flex-direction:column; justify-content:center;">
+    <span class="kicker cor" style="margin-bottom:8mm; display:block;">Por que este exercício existe</span>
+
+    <p class="fecho">
+      Boa parte do trabalho de quem escreve software não é escrever software. É pegar uma tela
+      travada, sem ninguém dizer por onde começar, chegar na causa e explicar isso para alguém que
+      não leu o código.
+    </p>
+
+    <p style="color:#C4C4CC; max-width:150mm;">
+      Sistema em produção quebra de formas que ninguém previu, e quase nunca vem com a resposta
+      escrita do lado. Este app aqui é um laboratório: os problemas são de verdade, os mesmos que a
+      gente encontra no IRIS, só que concentrados e sem cliente esperando.
+    </p>
+
+    <p style="color:#C4C4CC; max-width:150mm;">
+      Você não precisa achar tudo. Ninguém acha tudo, nem eu.
+    </p>
+
+    <div class="bloco" style="margin-top:8mm;">
+      <span class="rotulo">Quando terminar</span>
+      <p style="color:#C4C4CC;">
+        Me manda o repositório com os seus commits e o <span class="mono">RELATORIO.md</span> na raiz.
+        A gente marca uma hora para você me mostrar o que encontrou.
+      </p>
+      <p style="margin-bottom:0; color:#C4C4CC;">
+        Dúvida sobre o enunciado, pergunta na hora. Dúvida sobre onde está o problema, tenta mais um
+        pouco antes de perguntar, mas pergunta.
+      </p>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; Bom trabalho.</span>
+      <span class="numero">06</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

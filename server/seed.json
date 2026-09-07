@@ -1,0 +1,248 @@
+{
+  "conversas": [
+    {
+      "id": "c1",
+      "titulo": "Prensa 01 com vibracao alta",
+      "ativoId": "a1",
+      "criadoEm": "2026-09-01T11:20:00.000Z",
+      "atualizadoEm": "2026-09-03T14:05:00.000Z",
+      "naoLidas": 2
+    },
+    {
+      "id": "c2",
+      "titulo": "Banbury 600 - temperatura do turno",
+      "ativoId": "a3",
+      "criadoEm": "2026-09-02T08:10:00.000Z",
+      "atualizadoEm": "2026-09-03T09:41:00.000Z",
+      "naoLidas": 0
+    },
+    {
+      "id": "c3",
+      "titulo": "Comparar consumo das injetoras",
+      "ativoId": "a5",
+      "criadoEm": "2026-09-02T15:30:00.000Z",
+      "atualizadoEm": "2026-09-02T16:12:00.000Z",
+      "naoLidas": 1
+    },
+    {
+      "id": "c4",
+      "titulo": "Parada nao programada 02/09",
+      "ativoId": "a2",
+      "criadoEm": "2026-09-02T19:02:00.000Z",
+      "atualizadoEm": "2026-09-02T19:48:00.000Z",
+      "naoLidas": 0
+    },
+    {
+      "id": "c5",
+      "titulo": "Nova conversa",
+      "ativoId": "a7",
+      "criadoEm": "2026-09-03T17:00:00.000Z",
+      "atualizadoEm": "2026-09-03T17:00:00.000Z",
+      "naoLidas": 0
+    }
+  ],
+  "mensagens": [
+    {
+      "id": "m1",
+      "conversaId": "c1",
+      "autor": "usuario",
+      "texto": "a prensa 01 abriu alerta de vibracao de novo, o que ta acontecendo",
+      "criadoEm": "2026-09-01T11:20:00.000Z"
+    },
+    {
+      "id": "m2",
+      "conversaId": "c1",
+      "autor": "agente",
+      "texto": "A Prensa 01 (MC-PRE-01) esta com RMS de velocidade em 9.2 mm/s nas ultimas 4 horas. A faixa aceitavel pela ISO 10816 para essa classe de maquina vai ate 7.1 mm/s. O alerta abriu as 09:14.",
+      "criadoEm": "2026-09-01T11:20:12.000Z"
+    },
+    {
+      "id": "m3",
+      "conversaId": "c1",
+      "autor": "usuario",
+      "texto": "isso comecou quando",
+      "criadoEm": "2026-09-01T11:22:00.000Z"
+    },
+    {
+      "id": "m4",
+      "conversaId": "c1",
+      "autor": "agente",
+      "texto": "A subida comeca no dia 29/08, saindo de 4.1 mm/s para 6.8 mm/s em cerca de 12 horas. Desde entao oscila entre 8 e 9.5 mm/s. A temperatura do mancal subiu junto, de 62 C para 88 C.",
+      "criadoEm": "2026-09-01T11:22:18.000Z"
+    },
+    {
+      "id": "m5",
+      "conversaId": "c1",
+      "autor": "usuario",
+      "texto": "manutencao trocou o rolamento dia 28",
+      "criadoEm": "2026-09-03T14:04:00.000Z"
+    },
+    {
+      "id": "m6",
+      "conversaId": "c1",
+      "autor": "agente",
+      "texto": "A troca em 28/08 e o inicio da subida em 29/08 sao consistentes com desalinhamento ou pre-carga incorreta na montagem. Sugiro alinhamento a laser antes de trocar a peca de novo.",
+      "criadoEm": "2026-09-03T14:05:00.000Z"
+    },
+    {
+      "id": "m7",
+      "conversaId": "c2",
+      "autor": "usuario",
+      "texto": "como ficou a temperatura do banbury 600 no turno da noite",
+      "criadoEm": "2026-09-02T08:10:00.000Z"
+    },
+    {
+      "id": "m8",
+      "conversaId": "c2",
+      "autor": "agente",
+      "texto": "Media de 112 C entre 22h e 06h, com pico de 123 C as 02:40. O limite configurado e 120 C, entao houve um alerta de 8 minutos nesse horario.",
+      "criadoEm": "2026-09-02T08:10:15.000Z"
+    },
+    {
+      "id": "m9",
+      "conversaId": "c2",
+      "autor": "usuario",
+      "texto": "e no turno anterior",
+      "criadoEm": "2026-09-03T09:40:00.000Z"
+    },
+    {
+      "id": "m10",
+      "conversaId": "c2",
+      "autor": "agente",
+      "texto": "No turno de 14h as 22h a media foi 108 C, sem ultrapassar o limite. O pico do turno foi 118 C as 20:15.",
+      "criadoEm": "2026-09-03T09:41:00.000Z"
+    },
+    {
+      "id": "m11",
+      "conversaId": "c3",
+      "autor": "usuario",
+      "texto": "compara o consumo da injetora 11 com a 12",
+      "criadoEm": "2026-09-02T15:30:00.000Z"
+    },
+    {
+      "id": "m12",
+      "conversaId": "c3",
+      "autor": "agente",
+      "texto": "Injetora 11: corrente media de 38.4 A nas ultimas 24h. Injetora 12: 35.1 A. A diferenca de 9 por cento se concentra no periodo das 06h as 14h.",
+      "criadoEm": "2026-09-02T15:30:20.000Z"
+    },
+    {
+      "id": "m13",
+      "conversaId": "c3",
+      "autor": "usuario",
+      "texto": "as duas rodam o mesmo molde?",
+      "criadoEm": "2026-09-02T16:12:00.000Z"
+    },
+    {
+      "id": "m14",
+      "conversaId": "c4",
+      "autor": "usuario",
+      "texto": "o que causou a parada de ontem na prensa 02",
+      "criadoEm": "2026-09-02T19:02:00.000Z"
+    },
+    {
+      "id": "m15",
+      "conversaId": "c4",
+      "autor": "agente",
+      "texto": "A Prensa 02 ficou sem leitura entre 13:42 e 14:26. Antes da interrupcao a corrente caiu de 41 A para 0 A em menos de um minuto, o que indica desligamento e nao falha do sensor.",
+      "criadoEm": "2026-09-02T19:02:30.000Z"
+    },
+    {
+      "id": "m16",
+      "conversaId": "c4",
+      "autor": "usuario",
+      "texto": "beleza, era troca de ferramenta",
+      "criadoEm": "2026-09-02T19:48:00.000Z"
+    }
+  ],
+  "ativos": [
+    {
+      "id": "a1",
+      "codigo": "MC-PRE-01",
+      "nome": "Prensa 01",
+      "linha": "Prensas",
+      "estado": "alerta",
+      "temperatura": 88.4,
+      "vibracao": 9.2,
+      "corrente": 44.1,
+      "alertas": 2
+    },
+    {
+      "id": "a2",
+      "codigo": "MC-PRE-02",
+      "nome": "Prensa 02",
+      "linha": "Prensas",
+      "estado": "operando",
+      "temperatura": 64.2,
+      "vibracao": 3.8,
+      "corrente": 41.0,
+      "alertas": 0
+    },
+    {
+      "id": "a3",
+      "codigo": "MC-BAN-600",
+      "nome": "Banbury 600",
+      "linha": "Mistura",
+      "estado": "alerta",
+      "temperatura": 123.1,
+      "vibracao": 5.4,
+      "corrente": 96.3,
+      "alertas": 1
+    },
+    {
+      "id": "a4",
+      "codigo": "MC-BAN-700",
+      "nome": "Banbury 700",
+      "linha": "Mistura",
+      "estado": "operando",
+      "temperatura": 104.7,
+      "vibracao": 4.9,
+      "corrente": 88.5,
+      "alertas": 0
+    },
+    {
+      "id": "a5",
+      "codigo": "MC-INJ-11",
+      "nome": "Injetora 11",
+      "linha": "Injecao",
+      "estado": "operando",
+      "temperatura": 71.3,
+      "vibracao": 2.1,
+      "corrente": 38.4,
+      "alertas": 0
+    },
+    {
+      "id": "a6",
+      "codigo": "MC-INJ-12",
+      "nome": "Injetora 12",
+      "linha": "Injecao",
+      "estado": "operando",
+      "temperatura": 69.8,
+      "vibracao": 2.4,
+      "corrente": 35.1,
+      "alertas": 0
+    },
+    {
+      "id": "a7",
+      "codigo": "MC-INJ-13",
+      "nome": "Injetora 13",
+      "linha": "Injecao",
+      "estado": "parado",
+      "temperatura": 24.0,
+      "vibracao": 0.0,
+      "corrente": 0.0,
+      "alertas": 0
+    },
+    {
+      "id": "a8",
+      "codigo": "MC-EXT-01",
+      "nome": "Extrusora 01",
+      "linha": "Extrusao",
+      "estado": "operando",
+      "temperatura": 149.2,
+      "vibracao": 3.1,
+      "corrente": 62.7,
+      "alertas": 0
+    }
+  ]
+}
