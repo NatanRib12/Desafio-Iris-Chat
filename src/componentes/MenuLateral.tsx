@@ -17,12 +17,14 @@ export function MenuLateral({ conversaAtiva, onSelecionarConversa, onSelecionarA
     api.listarConversas(busca).then((lista) => {
       setConversas(lista);
     });
-  });
+  }, [busca]);
 
   useEffect(() => {
-    setInterval(() => {
+    const timer = setInterval(() => {
       api.contarNaoLidas().then((contagem) => setNaoLidas(contagem));
     }, 3000);
+
+    return () => clearInterval(timer);
   }, [conversaAtiva]);
 
   function abrir(conversa: any) {
