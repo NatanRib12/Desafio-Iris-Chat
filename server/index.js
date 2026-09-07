@@ -46,7 +46,7 @@ app.get('/api/conversas/:id/mensagens', async (req, res) => {
   res.json({
     mensagens,
     total: mensagens.length,
-    ultimaEm: ultima.criadoEm,
+    ultimaEm: ultima?.criadoEm || null,
   });
 });
 
