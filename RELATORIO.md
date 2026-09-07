@@ -46,3 +46,11 @@ Descarta o temporizador antigo antes de iniciar um novo.
 
     return () => clearInterval(timer);
   }, [conversaAtiva]);
+
+# 3 Multiplas re-requisições para a rota /api/conversas/:id/mensagens
+
+## Causa
+- passagem de objetos literais instáveis via props (conversa={{ id, titulo }}). Como o componente pai atualizava seu estado a cada segundo por conta do relógio, o React recriava a referência do objeto na memória. O useEffect do Chat, dependendo da referência do objeto conversa, entendia que o valor havia mudado e disparava uma nova chamada à API. Em outras palavras, o conteúdo do objeto se mantinha o mesmo, mas o endereço na memória não.
+
+## Solução
+Alteração na dependência do useEffect, assim monitorando se o endereço de memória é o mesmo ou não, evitando que novos objetos sejam criados sem necessidade.

@@ -16,13 +16,13 @@ export function Chat({ conversa }: Props) {
     api.listarMensagens(conversa.id).then((resposta) => {
       setMensagens(resposta.mensagens);
     });
-  }, [conversa]);
+  }, [conversa.id]);
 
   useEffect(() => {
     if (fimDaLista.current) {
       fimDaLista.current.scrollIntoView({ behavior: 'smooth' });
     }
-  });
+  }, [mensagens]);
 
   async function enviar() {
     if (texto.trim() === '') return;
